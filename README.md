@@ -1,5 +1,7 @@
 # CircuitRepair
 
+Go Easy on my code it was made in 48ish Hrs
+
 ![image](https://user-images.githubusercontent.com/36323674/202866708-9b3b6f1c-c0f9-459b-8e0f-3fa8503f9d07.png)
 
 Circuit Repair is puzzle focused on Teaching TVET students about Electrical Circuit Components.
