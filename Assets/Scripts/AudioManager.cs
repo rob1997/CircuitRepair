@@ -13,6 +13,8 @@ public class AudioManager : Singleton<AudioManager>
     
     public AudioClip slottedSound;
     
+    public AudioClip slottedSound2;
+    
     public AudioClip unSlottedSound;
     
     public AudioClip unSlottedSound2;

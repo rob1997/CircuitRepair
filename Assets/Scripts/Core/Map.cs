@@ -8,17 +8,9 @@ using UnityEngine.UI;
 
 public class Map : Singleton<Map>
 {
-    [Serializable]
-    public struct LogicGoal
-    {
-        public Wire Wire;
-
-        public bool Value;
-    }
-
-    public LogicGoal[] LogicGoals;
-
     public float time;
+    
+    public bool stopTimer;
 
     public Button exitButton;
 
@@ -34,18 +26,17 @@ public class Map : Singleton<Map>
     public Button loseContinueButton;
     public Button winContinueButton;
 
-    private float _timer;
+    public Transform outletsParent;
+    
+    public Transform inletsParent;
+    
+    public Transform componentsParent;
 
-    private bool _stopTimer;
+    private float _timer;
     
     private void Start()
     {
         exitButton.onClick.AddListener(ExitLevel);
-
-        foreach (var goal in LogicGoals)
-        {
-            goal.Wire.Input.GetComponent<SlotUi>().TurnGoalOn(goal.Value);
-        }
 
         _timer = time;
         
@@ -53,13 +44,18 @@ public class Map : Singleton<Map>
         
         loseContinueButton.onClick.AddListener(ExitLevel);
         winContinueButton.onClick.AddListener(ExitLevel);
+
+        if (stopTimer)
+        {
+            timerImage.gameObject.SetActive(false);
+        }
     }
 
     public void CheckGoals()
     {
-        foreach (var goal in LogicGoals)
+        foreach (Dock dock in inletsParent.GetComponentsInChildren<Dock>())
         {
-            if (goal.Wire.Value != goal.Value)
+            if (!dock.gameObject.activeSelf || dock.Socket == null || Math.Abs(dock.goal - dock.value) > .05f)
             {
                 return;
             }
@@ -69,7 +65,7 @@ public class Map : Singleton<Map>
         Debug.Log("<color=#00FF00>WIN!!!</color>");
         Win();
 
-        _stopTimer = true;
+        stopTimer = true;
     }
 
     private void Update()
@@ -79,14 +75,14 @@ public class Map : Singleton<Map>
 
     private void CountTimer()
     {
-        if (_stopTimer) return;
+        if (stopTimer) return;
         
         if (_timer <= 0)
         {
             //Lose Scenario
             Lose();
 
-            _stopTimer = true;
+            stopTimer = true;
         }
 
         else

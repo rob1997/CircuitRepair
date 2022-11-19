@@ -24,8 +24,6 @@ public class LevelMenu : MonoBehaviour
 
     public void LoadLevel(int index)
     {
-        AudioSource.PlayClipAtPoint(AudioManager.Instance.clickSound2, Vector3.zero);
-        
         SceneManager.LoadScene(sceneOffset + index);
     }
 }
